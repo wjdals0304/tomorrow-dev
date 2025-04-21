@@ -12,15 +12,15 @@ export function Header() {
             </span>
           </Link>
         </div>
-        <div className="flex items-center gap-7.5">
+        <div className="flex items-center gap-30">
           <div className="font-size-sm text-white leading-none text-right flex items-center gap-2">
             <div className="whitespace-nowrap">
               <span className="font-size-2xl font-[700] text-right">8</span>
               <span>명</span>
             </div>
           </div>
-          <div className="flex items-center gap-7.5">
-            <ul className="flex items-center gap-7.5 leading-none">
+          <div className="flex items-center gap-30">
+            <ul className="flex items-center gap-30 leading-none">
               <li className="shrink-0">
                 <Link href="/" className="text-white font-size-sm">
                   최신 생성 글

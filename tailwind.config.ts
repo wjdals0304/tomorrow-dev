@@ -23,6 +23,7 @@ const config: Config = {
       },
       height: {
         '60': '60px',
+        '100': '100px',
       },
       spacing: {
         1: '4px',

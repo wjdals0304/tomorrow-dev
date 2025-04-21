@@ -5,13 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        dark: {
-          DEFAULT: '#121212',
-        },
+        dark: '#121212',
         white: {
-          DEFAULT: '#fff',
-          b3: '#ffffffb3',
-          '1a': '#ffffff1a',
+          900: '#fff',
+          500: '#ffffffb3',
+          100: '#ffffff1a',
         },
       },
       fontSize: {
@@ -27,8 +25,14 @@ const config: Config = {
         '60': '60px',
       },
       spacing: {
-        '30': '30px',
-        '70': '70px',
+        1: '4px',
+        2: '8px',
+        3: '12px',
+        4: '16px',
+        5: '20px',
+        6: '24px',
+        7: '28px',
+        7.5: '30px',
       },
     },
   },

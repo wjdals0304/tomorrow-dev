@@ -3,31 +3,31 @@ import Link from 'next/link';
 export function Header() {
   return (
     <header className="fixed top-0 left-0 z-[9] w-full h-60 bg-dark">
-      <div className="flex items-center justify-between pr-70 pl-5 m-[auto] h-full relative after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-px after:bg-white-1a">
+      <div className="flex items-center justify-between pr-[70px] pl-5 m-[auto] h-full relative after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-px after:bg-white-1a">
         <div className="flex items-center">
           <Link href="/">
-            <span className="font-size-sm font-[700] text-white-b3 line-height-[1]">
+            <span className="font-size-sm font-[700] text-white-500 leading-[1]">
               Tomorrow
               <br /> Dev
             </span>
           </Link>
         </div>
-        <div className="flex items-center gap-30">
+        <div className="flex items-center gap-7.5">
           <div className="font-size-sm text-white leading-none text-right flex items-center gap-2">
-            <div className="whitespace-nowrap">
+            <div className="whitespace-nowrap text-white-900">
               <span className="font-size-2xl font-[700] text-right">8</span>
               <span>명</span>
             </div>
           </div>
-          <div className="flex items-center gap-30">
-            <ul className="flex items-center gap-30 leading-none">
+          <div className="flex items-center gap-7.5">
+            <ul className="flex items-center gap-7.5 leading-none">
               <li className="shrink-0">
-                <Link href="/" className="text-white font-size-sm">
+                <Link href="/" className="text-white-900 font-size-sm">
                   최신 생성 글
                 </Link>
               </li>
               <li className="shrink-0">
-                <Link href="/" className="text-white font-size-sm">
+                <Link href="/" className="text-white-900 font-size-sm">
                   최신 수정 글
                 </Link>
               </li>

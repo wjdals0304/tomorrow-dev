@@ -71,7 +71,7 @@ export function useChartOption({
     const roundedMax = Math.ceil(maxValue / 500) * 500;
 
     return {
-      backgroundColor: '#1a1a1a',
+      backgroundColor: 'transparent',
       grid: {
         left: '10%',
         right: '5%',

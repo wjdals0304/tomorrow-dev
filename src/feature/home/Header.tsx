@@ -2,32 +2,32 @@ import Link from 'next/link';
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 z-[9] w-full h-[60px] bg-dark-background">
-      <div className="flex items-center justify-between pr-[70px] pl-[20px] m-[auto] h-full relative after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-[#ffffff1a]">
+    <header className="fixed top-0 left-0 z-[9] w-full h-60 bg-dark">
+      <div className="flex items-center justify-between pr-70 pl-5 m-[auto] h-full relative after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-[#ffffff1a]">
         <div className="flex items-center">
           <Link href="/">
-            <span className="font-size-[14px] font-[700] text-[#ffffffb3] line-height-[1]">
+            <span className="font-size-sm font-[700] text-white-b3 line-height-[1]">
               Tomorrow
               <br /> Dev
             </span>
           </Link>
         </div>
-        <div className="flex items-center gap-[30px]">
-          <div className="font-size-[14px] text-[#fff] line-height-[1] text-right flex items-center gap-[8px]">
+        <div className="flex items-center gap-7.5">
+          <div className="font-size-sm text-white leading-none text-right flex items-center gap-2">
             <div className="whitespace-nowrap">
-              <span className="font-size-[24px] font-[700] text-right">8</span>
+              <span className="font-size-2xl font-[700] text-right">8</span>
               <span>명</span>
             </div>
           </div>
-          <div className="flex items-center gap-[30px]">
-            <ul className="flex items-center gap-[30px] line-height-[1]">
+          <div className="flex items-center gap-7.5">
+            <ul className="flex items-center gap-7.5 leading-none">
               <li className="shrink-0">
-                <Link href="/" className="text-[#fff] font-size-[14px]">
+                <Link href="/" className="text-white font-size-sm">
                   최신 생성 글
                 </Link>
               </li>
               <li className="shrink-0">
-                <Link href="/" className="text-[#fff] font-size-[14px]">
+                <Link href="/" className="text-white font-size-sm">
                   최신 수정 글
                 </Link>
               </li>
@@ -35,7 +35,7 @@ export function Header() {
             <div>
               <Link
                 href="https://github.com/wjdals0304"
-                className="flex items-center w-[24px] h-[24px] rounded-full"
+                className="flex items-center w-6 h-6 rounded-full"
               >
                 <svg
                   role="img"

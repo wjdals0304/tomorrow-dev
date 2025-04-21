@@ -11,13 +11,16 @@ const config: Config = {
           500: '#ffffffb3',
           100: '#ffffff1a',
         },
+        red: {
+          DEFAULT: '#eb0000',
+        },
       },
       fontSize: {
         xs: ['12px', { lineHeight: '1' }],
         sm: ['14px', { lineHeight: '1' }],
         base: ['16px', { lineHeight: '1.5' }],
         lg: ['18px', { lineHeight: '1.5' }],
-        xl: ['20px', { lineHeight: '1.5' }],
+        xl: ['20px', { lineHeight: '1', fontWeight: '700' }],
         '2xl': ['24px', { lineHeight: '1' }],
         '3xl': ['30px', { lineHeight: '1' }],
       },

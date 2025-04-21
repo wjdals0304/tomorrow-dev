@@ -1,7 +1,7 @@
 import { Article } from './Article';
 import { Chart } from './Chart';
 import { Orders } from './Orders';
-import { ShortPost } from './ShortPost';
+import { ShortPost } from './ShortPost/ShortPost';
 
 export function Main() {
   return (

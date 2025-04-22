@@ -1,14 +1,9 @@
 'use client';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { clsx, type ClassValue } from 'clsx';
+import { cn } from '@/shared/lib/tailWindMerge';
 import ReactECharts from 'echarts-for-react';
-import { twMerge } from 'tailwind-merge';
 import { useChartData } from './hooks/useChartData';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 export function Chart() {
   const {

@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Link from 'next/link';
-import { ShortPostData } from '../types/shortPostData';
+import { ShortPostData } from '../../../shared/types/shortPostData';
 
 interface ShortPostItemProps {
   post: ShortPostData;

@@ -1,12 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-
-export interface ShortPostData {
-  title: string;
-  updated_at: string;
-  tagname: string | null;
-}
+import { ShortPostData } from '../types/shortPostData';
 
 async function fetchShortPosts(): Promise<ShortPostData[]> {
   const response = await fetch('/api/shortPosts');

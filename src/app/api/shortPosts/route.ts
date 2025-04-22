@@ -7,6 +7,7 @@ export async function GET() {
     const supabase = createRouteHandlerClient({ cookies });
 
     const { data, error } = await supabase.from('short_posts').select(`
+        id,
         title,
         updated_at,
         short_post_tags!inner (
@@ -24,6 +25,7 @@ export async function GET() {
     const formattedData =
       data?.map((post) => {
         const typedPost = post as unknown as {
+          id: string;
           title: string;
           updated_at: string;
           short_post_tags: {
@@ -33,6 +35,7 @@ export async function GET() {
           }[];
         };
         return {
+          id: typedPost.id,
           title: typedPost.title,
           updated_at: typedPost.updated_at,
           tagname: typedPost.short_post_tags?.[0]?.tags?.name,

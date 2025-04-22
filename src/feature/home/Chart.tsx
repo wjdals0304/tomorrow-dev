@@ -1,7 +1,14 @@
 'use client';
 
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { clsx, type ClassValue } from 'clsx';
 import ReactECharts from 'echarts-for-react';
+import { twMerge } from 'tailwind-merge';
 import { useChartData } from './hooks/useChartData';
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export function Chart() {
   const {
@@ -17,54 +24,55 @@ export function Chart() {
   if (isLoading) {
     return (
       <div className="flex-1 bg-dark p-5 flex items-center justify-center">
-        <div className="text-gray-400">데이터 로딩중...</div>
+        <LoadingSpinner />
       </div>
     );
   }
+
+  const metricButtons = [
+    {
+      key: 'views',
+      label: '조회수',
+      value: latestStats.views,
+      change: viewsChange,
+    },
+    {
+      key: 'users',
+      label: '사용자',
+      value: latestStats.users,
+      change: usersChange,
+    },
+  ];
 
   return (
     <div className="flex-1 bg-dark py-5 pr-5">
       <div className="flex gap-5">
         <div className="flex flex-col gap-5">
-          <button
-            className={`flex flex-col gap-2 text-left ${
-              selectedMetric === 'views' ? 'opacity-100' : 'opacity-50'
-            }`}
-            onClick={() => setSelectedMetric('views')}
-          >
-            <div className="text-gray-400">조회수</div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-white text-2xl font-bold">
-                {latestStats.views.toLocaleString()}
-              </span>
-              <span
-                className={viewsChange >= 0 ? 'text-green-500' : 'text-red-500'}
-              >
-                {viewsChange > 0 ? '+' : ''}
-                {viewsChange}%
-              </span>
-            </div>
-          </button>
-
-          <button
-            className={`flex flex-col gap-2 text-left ${
-              selectedMetric === 'users' ? 'opacity-100' : 'opacity-50'
-            }`}
-            onClick={() => setSelectedMetric('users')}
-          >
-            <div className="text-gray-400">사용자</div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-white text-2xl font-bold">
-                {latestStats.users.toLocaleString()}
-              </span>
-              <span
-                className={usersChange >= 0 ? 'text-green-500' : 'text-red-500'}
-              >
-                {usersChange > 0 ? '+' : ''}
-                {usersChange}%
-              </span>
-            </div>
-          </button>
+          {metricButtons.map((metric) => (
+            <button
+              key={metric.key}
+              className={cn(
+                'flex flex-col gap-2 text-left',
+                selectedMetric !== metric.key && 'opacity-50',
+              )}
+              onClick={() => setSelectedMetric(metric.key as 'views' | 'users')}
+            >
+              <div className="text-gray-400">{metric.label}</div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-white-900 text-2xl font-bold">
+                  {metric.value.toLocaleString()}
+                </span>
+                <span
+                  className={cn(
+                    metric.change >= 0 ? 'text-green-500' : 'text-red-500',
+                  )}
+                >
+                  {metric.change > 0 ? '+' : ''}
+                  {metric.change}%
+                </span>
+              </div>
+            </button>
+          ))}
         </div>
 
         <div className="flex-1">

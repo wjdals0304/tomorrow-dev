@@ -3,13 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export function ArticleItem({ article }: { article: ArticleData }) {
-  const { id, title, thumbnail_url, tagname, content } = article;
+  const {
+    id,
+    title,
+    thumbnailUrl = '/images/default-image.jpg',
+    tagname,
+    content,
+  } = article;
   return (
     <div key={id} className="flex flex-col gap-6">
       <Link href={`/article/${id}`}>
         <div className="relative">
           <Image
-            src={thumbnail_url || '/images/default-image.jpg'}
+            src={thumbnailUrl}
             alt={title}
             width={370}
             height={180}

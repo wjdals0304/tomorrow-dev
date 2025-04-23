@@ -3,6 +3,6 @@ export interface ArticleData {
   title: string;
   updated_at: string;
   tagname?: string;
-  thumbnail_url?: string;
+  thumbnailUrl?: string;
   content?: string;
 }

@@ -4,15 +4,7 @@ import { useArticles } from '@/hooks/useArticles';
 import { ArticleContent } from './ArticleContent';
 
 export function Article() {
-  const { data: articles, isLoading, isError, error } = useArticles();
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center p-5 h-screen">
-        <p className="text-gray-500">아티클 로딩 중...</p>
-      </div>
-    );
-  }
+  const { data: articles, isError, error } = useArticles();
 
   if (isError) {
     console.error('Error fetching articles:', error);

@@ -1,3 +1,5 @@
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import React from 'react';
 import { Article } from './Article/Article';
 import { Chart } from './Chart';
 import { ShortPost } from './ShortPost/ShortPost';
@@ -9,7 +11,9 @@ export function Main() {
         <Chart />
         <ShortPost />
       </div>
-      <Article />
+      <React.Suspense fallback={<LoadingSpinner />}>
+        <Article />
+      </React.Suspense>
     </main>
   );
 }

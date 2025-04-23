@@ -2,6 +2,7 @@
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useChartData } from '@/hooks/useChartData';
+import { cn } from '@/shared/lib/tailWindMerge';
 import ReactECharts from 'echarts-for-react';
 
 export function Chart() {

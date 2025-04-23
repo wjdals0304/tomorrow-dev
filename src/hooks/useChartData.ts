@@ -1,9 +1,9 @@
 'use client';
 
-import { useChartOption } from './useChartOption';
-import { useDailyStatsQuery } from './useDailyStatsQuery';
-import { useMetricSelection } from './useMetricSelection';
-import { useStatsCalculation } from './useStatsCalculation';
+import { useChartOption } from '@/hooks/useChartOption';
+import { useDailyStatsQuery } from '@/hooks/useDailyStatsQuery';
+import { useMetricSelection } from '@/hooks/useMetricSelection';
+import { useStatsCalculation } from '@/hooks/useStatsCalculation';
 
 export function useChartData() {
   const { data: statsData = [], isLoading } = useDailyStatsQuery();

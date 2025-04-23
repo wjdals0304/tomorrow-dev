@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Link from 'next/link';
-import { ShortPostData } from '../types/shortPostData';
+import { ShortPostData } from '../../../shared/types/shortPostData';
 
 interface ShortPostItemProps {
   post: ShortPostData;
@@ -23,7 +23,7 @@ export function ShortPostItem({ post }: ShortPostItemProps) {
       <span className="text-dark bg-red-500 text-xs px-[5px] py-[7px] rounded">
         {tagname}
       </span>
-      <div className="text-base text-white-900 ">{title}</div>
+      <div className="text-base text-white-900 flex-shrink-0">{title}</div>
       <div className="grow" />
       <div className="text-xs shrink-0 text-white-500">
         <span>{timeAgo}</span>

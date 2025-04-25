@@ -4,6 +4,7 @@ import MDEditor from '@uiw/react-md-editor';
 import '@uiw/react-md-editor/markdown-editor.css';
 import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
+import type { Tag } from '../lib/tags';
 import { createArticle } from '../posts/actions';
 
 function SubmitButton() {
@@ -27,10 +28,15 @@ export interface ArticleFormState {
     description?: string[];
     content?: string[];
     thumbnail_url?: string[];
+    tag_ids?: string[];
   };
 }
 
-export default function CreateArticleForm() {
+interface CreateArticleFormProps {
+  tags: Tag[];
+}
+
+export default function CreateArticleForm({ tags }: CreateArticleFormProps) {
   const initialState: ArticleFormState = { message: null, errors: {} };
 
   const [state, dispatch] = useActionState(createArticle, initialState);
@@ -147,7 +153,7 @@ export default function CreateArticleForm() {
           id="thumbnail_url"
           name="thumbnail_url"
           aria-describedby="thumbnail_url-error"
-          className="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" // 다크모드 스타일
+          className="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
         <div
           id="thumbnail_url-error"
@@ -158,6 +164,43 @@ export default function CreateArticleForm() {
           {state?.errors?.thumbnail_url &&
             state.errors.thumbnail_url.map((error: string) => (
               <p key={`thumb-error-${error}`} className="text-sm text-red-600">
+                {error}
+              </p>
+            ))}
+        </div>
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-700">
+          태그 선택:
+        </label>
+        <div className="flex flex-wrap gap-2" aria-describedby="tags-error">
+          {tags.map((tag) => (
+            <div key={tag.id} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`tag-${tag.id}`}
+                name="tag_ids"
+                value={tag.id.toString()}
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label
+                htmlFor={`tag-${tag.id}`}
+                className="ml-2 text-sm text-gray-700"
+              >
+                {tag.name}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div
+          id="tags-error"
+          aria-live="polite"
+          aria-atomic="true"
+          className="mt-1"
+        >
+          {state?.errors?.tag_ids &&
+            state.errors.tag_ids.map((error: string) => (
+              <p key={`tag-error-${error}`} className="text-sm text-red-600">
                 {error}
               </p>
             ))}

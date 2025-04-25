@@ -15,6 +15,7 @@ const ArticleSchema = z.object({
     .url({ message: '유효한 URL을 입력해주세요.' })
     .optional()
     .or(z.literal('')),
+  tag_ids: z.array(z.string()).optional(),
 });
 
 async function checkAdminAuth() {
@@ -31,11 +32,14 @@ export async function createArticle(
 
     const supabaseAdmin = getSupabaseAdmin();
 
+    const tagIds = formData.getAll('tag_ids');
+
     const validatedFields = ArticleSchema.safeParse({
       title: formData.get('title'),
       content: formData.get('content'),
       description: formData.get('description'),
       thumbnail_url: formData.get('thumbnail_url'),
+      tag_ids: tagIds,
     });
 
     if (!validatedFields.success) {
@@ -49,9 +53,15 @@ export async function createArticle(
       };
     }
 
-    const { title, content, description, thumbnail_url } = validatedFields.data;
+    const {
+      title,
+      content,
+      description,
+      thumbnail_url,
+      tag_ids: validatedTagIds,
+    } = validatedFields.data;
 
-    const { data, error } = await supabaseAdmin
+    const { data: articleData, error: articleError } = await supabaseAdmin
       .from('articles')
       .insert({
         title,
@@ -62,14 +72,33 @@ export async function createArticle(
       .select('id')
       .single();
 
-    if (error) {
-      console.error('Supabase Insert Error:', error);
-      return { message: `데이터베이스 저장 실패: ${error.message}` };
+    if (articleError) {
+      console.error('Supabase Insert Article Error:', articleError);
+      return { message: `게시글 저장 실패: ${articleError.message}` };
+    }
+
+    const articleId = articleData.id;
+
+    if (validatedTagIds && validatedTagIds.length > 0) {
+      const tagsToInsert = validatedTagIds.map((tagId) => ({
+        article_id: articleId,
+        tag_id: parseInt(tagId, 10),
+      }));
+
+      const { error: tagsError } = await supabaseAdmin
+        .from('article_tags')
+        .insert(tagsToInsert);
+
+      if (tagsError) {
+        console.error('Supabase Insert Tags Error:', tagsError);
+        return { message: `태그 연결 실패: ${tagsError.message}` };
+      }
     }
 
     revalidatePath('/admin');
-    if (data?.id) {
-      revalidatePath(`/blog/${data.id.toString()}`);
+    revalidatePath('/blog');
+    if (articleId) {
+      revalidatePath(`/blog/${articleId.toString()}`);
     }
   } catch (e: unknown) {
     console.error('Create Article Error:', e);

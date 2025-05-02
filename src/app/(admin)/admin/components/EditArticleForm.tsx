@@ -4,6 +4,7 @@ import { Article, updateArticleAction } from '@/app/(admin)/admin/lib/articles';
 import { Tag } from '@/app/(admin)/admin/lib/tags';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import EditTags from './EditTags';
 
 interface EditArticleFormProps {
   article: Article & { article_tags?: { tags: { id: number } }[] };
@@ -121,25 +122,11 @@ export default function EditArticleForm({
       <div>
         <label className="block text-sm font-medium text-gray-700">태그</label>
         <div className="mt-2 space-y-2">
-          {tags.map((tag) => (
-            <div key={tag.id} className="flex items-center">
-              <input
-                id={`tag-${tag.id}`}
-                name="tags"
-                type="checkbox"
-                value={tag.id}
-                checked={selectedTags.includes(tag.id)}
-                onChange={handleTagChange}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label
-                htmlFor={`tag-${tag.id}`}
-                className="ml-2 block text-sm text-gray-900"
-              >
-                {tag.name}
-              </label>
-            </div>
-          ))}
+          <EditTags
+            tags={tags}
+            selectedTags={selectedTags}
+            handleTagChange={handleTagChange}
+          />
         </div>
       </div>
 

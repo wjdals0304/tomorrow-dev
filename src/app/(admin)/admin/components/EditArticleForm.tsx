@@ -51,7 +51,7 @@ export default function EditArticleForm({
 
     try {
       await updateArticleAction(formData);
-      router.push(`/admin/posts/edit/${article.id}`);
+      router.refresh();
     } catch (err) {
       console.error('Error updating article:', err);
       setError(

@@ -18,7 +18,7 @@ export default function EditTagContent({
       <input
         id={`tag-${id}`}
         name="tags"
-        type="checkbox"
+        type="radio"
         value={id}
         checked={selectedTags.includes(id)}
         onChange={handleTagChange}

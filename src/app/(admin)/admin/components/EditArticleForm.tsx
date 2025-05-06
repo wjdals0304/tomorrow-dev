@@ -30,11 +30,7 @@ export default function EditArticleForm({
 
   const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
     const tagId = parseInt(event.target.value, 10);
-    if (event.target.checked) {
-      setSelectedTags((prev) => [...prev, tagId]);
-    } else {
-      setSelectedTags((prev) => prev.filter((id) => id !== tagId));
-    }
+    setSelectedTags([tagId]);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {

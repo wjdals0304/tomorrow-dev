@@ -4,7 +4,7 @@ import { getSupabaseAdmin } from '@/app/(admin)/admin/lib/supabaseAdmin';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import { ArticleFormState } from '../components/CreateArticleForm';
+import { ArticleFormState } from '../lib/useArticleForm';
 
 const ArticleSchema = z.object({
   title: z.string().min(1, { message: '제목을 입력해주세요.' }),

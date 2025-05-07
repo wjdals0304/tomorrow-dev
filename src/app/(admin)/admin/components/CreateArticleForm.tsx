@@ -2,9 +2,9 @@
 
 import MDEditor from '@uiw/react-md-editor';
 import '@uiw/react-md-editor/markdown-editor.css';
-import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import type { Tag } from '../lib/tags';
+import { useArticleForm } from '../lib/useArticleForm';
 import { createArticle } from '../posts/actions';
 
 function SubmitButton() {
@@ -21,33 +21,17 @@ function SubmitButton() {
   );
 }
 
-export interface ArticleFormState {
-  message: string | null;
-  errors?: {
-    title?: string[];
-    description?: string[];
-    content?: string[];
-    thumbnail_url?: string[];
-    tag_ids?: string[];
-  };
-}
-
 interface CreateArticleFormProps {
   tags: Tag[];
 }
 
 export default function CreateArticleForm({ tags }: CreateArticleFormProps) {
-  const initialState: ArticleFormState = { message: null, errors: {} };
-
-  const [state, dispatch] = useActionState(createArticle, initialState);
-
-  const [markdownContent, setMarkdownContent] = useState<string | undefined>(
-    '',
-  );
+  const { state, formAction, markdownContent, setMarkdownContent } =
+    useArticleForm(createArticle);
 
   return (
     <form
-      action={dispatch}
+      action={formAction}
       className="space-y-6 p-6 bg-white rounded-lg shadow-md"
     >
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">새 글 작성</h2>

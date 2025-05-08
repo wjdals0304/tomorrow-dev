@@ -15,19 +15,16 @@ export default function EditArticleForm({
   tags,
 }: EditArticleFormProps) {
   const {
-    isLoading,
-    title,
-    setTitle,
-    description,
-    setDescription,
-    content,
-    setContent,
+    register,
+    handleSubmit,
+    formState: { errors },
     selectedTags,
     handleTagChange,
-    handleSubmit,
     error,
     isPending,
+    isLoading,
   } = useEditArticle({ initialArticle });
+
   if (isLoading) return <div>로딩 중...</div>;
 
   return (
@@ -42,12 +39,12 @@ export default function EditArticleForm({
         <input
           type="text"
           id="title"
-          name="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          {...register('title', { required: '제목을 입력해주세요' })}
           className="px-2 py-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        {errors.title && (
+          <p className="text-red-500 text-sm">{errors.title.message}</p>
+        )}
       </div>
 
       <div>
@@ -60,9 +57,7 @@ export default function EditArticleForm({
         <input
           type="text"
           id="description"
-          name="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          {...register('description')}
           className="px-2 py-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
@@ -76,13 +71,13 @@ export default function EditArticleForm({
         </label>
         <textarea
           id="content"
-          name="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          {...register('content', { required: '내용을 입력해주세요' })}
           rows={10}
-          required
           className="px-2 py-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        {errors.content && (
+          <p className="text-red-500 text-sm">{errors.content.message}</p>
+        )}
       </div>
 
       <div>

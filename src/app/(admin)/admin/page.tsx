@@ -1,40 +1,26 @@
-import {
-  Article,
-  getAdminArticlesList,
-} from '@/app/(admin)/admin/lib/articles';
 import Link from 'next/link';
-import CreateArticleForm from './components/CreateArticleForm';
-import { getTagsList, Tag } from './lib/tags';
 
-export default async function AdminPage() {
-  const [articles, tags]: [Omit<Article, 'content'>[], Tag[]] =
-    await Promise.all([getAdminArticlesList(), getTagsList()]);
-
+export default function AdminPage() {
   return (
-    <div className="bg-white-500 h-full">
-      <h1 className="text-2xl font-bold text-center py-4">관리자 페이지</h1>
-      <CreateArticleForm tags={tags} />
-
-      <div className="m-3">
-        <h2 className="text-xl font-bold  py-4">작성된 글 목록</h2>
-        {articles && articles.length > 0 ? (
-          <ul>
-            {articles.map((article) => (
-              <li key={article.id}>
-                <Link href={`/admin/posts/edit/${article.id.toString()}`}>
-                  {article.title}
-                </Link>
-                <span>
-                  {' '}
-                  - {new Date(article.created_at).toLocaleDateString()}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>작성된 글이 없습니다.</p>
-        )}
-      </div>
-    </div>
+    <nav className="bg-white-500 h-screen p-4">
+      <ol className="flex flex-col gap-4">
+        <li>
+          <Link
+            href="/admin/posts"
+            className="hover:bg-gray-100 p-2 rounded-md"
+          >
+            게시글 관리
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/admin/short_posts"
+            className="hover:bg-gray-100 p-2 rounded-md"
+          >
+            짧은 글 관리
+          </Link>
+        </li>
+      </ol>
+    </nav>
   );
 }

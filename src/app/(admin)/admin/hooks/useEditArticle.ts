@@ -81,8 +81,6 @@ export function useEditArticle({ initialArticle }: UseEditArticleProps) {
     updateMutation.mutate(formData);
   };
 
-  const currentValues = watch();
-
   return {
     register,
     handleSubmit: handleSubmit(onSubmit),
@@ -92,7 +90,6 @@ export function useEditArticle({ initialArticle }: UseEditArticleProps) {
 
     article,
     isLoading,
-    currentValues,
     selectedTags,
     handleTagChange,
     error,

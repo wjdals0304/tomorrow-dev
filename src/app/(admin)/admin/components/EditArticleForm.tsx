@@ -1,9 +1,8 @@
 'use client';
 
-import { Article, updateArticleAction } from '@/app/(admin)/admin/lib/articles';
+import { Article } from '@/app/(admin)/admin/lib/articles';
 import { Tag } from '@/app/(admin)/admin/lib/tags';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useEditArticle } from '../hooks/useEditArticle';
 import EditTags from './EditTags';
 
 interface EditArticleFormProps {
@@ -12,53 +11,24 @@ interface EditArticleFormProps {
 }
 
 export default function EditArticleForm({
-  article,
+  article: initialArticle,
   tags,
 }: EditArticleFormProps) {
-  const router = useRouter();
-  const [title, setTitle] = useState(article.title);
-  const [description, setDescription] = useState(article.description || '');
-  const [content, setContent] = useState(article.content);
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const initialTagIds = article.article_tags?.map((at) => at.tags.id) || [];
-    setSelectedTags(initialTagIds);
-  }, [article]);
-
-  const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const tagId = parseInt(event.target.value, 10);
-    setSelectedTags([tagId]);
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-
-    const formData = new FormData(event.currentTarget);
-    formData.append('articleId', article.id.toString());
-    formData.delete('tags');
-    selectedTags.forEach((tagId) => {
-      formData.append('tags', tagId.toString());
-    });
-
-    try {
-      await updateArticleAction(formData);
-      router.refresh();
-    } catch (err) {
-      console.error('Error updating article:', err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : '게시글 수정 중 알 수 없는 오류가 발생했습니다.',
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const {
+    isLoading,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    content,
+    setContent,
+    selectedTags,
+    handleTagChange,
+    handleSubmit,
+    error,
+    isPending,
+  } = useEditArticle({ initialArticle });
+  if (isLoading) return <div>로딩 중...</div>;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
@@ -130,10 +100,10 @@ export default function EditArticleForm({
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
       >
-        {isSubmitting ? '수정 중...' : '수정하기'}
+        {isPending ? '수정 중...' : '수정하기'}
       </button>
     </form>
   );

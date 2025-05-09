@@ -7,7 +7,7 @@ export default function AdminPage() {
         <li>
           <Link
             href="/admin/posts"
-            className="hover:bg-gray-100 p-2 rounded-md"
+            className="hover:bg-gray-100 p-2 rounded-md cursor-pointer"
           >
             게시글 관리
           </Link>
@@ -15,7 +15,7 @@ export default function AdminPage() {
         <li>
           <Link
             href="/admin/short_posts"
-            className="hover:bg-gray-100 p-2 rounded-md"
+            className="hover:bg-gray-100 p-2 rounded-md cursor-pointer"
           >
             짧은 글 관리
           </Link>

@@ -1,3 +1,4 @@
+import '@/app/styles/reset.css';
 import React from 'react';
 
 export default function AdminLayout({

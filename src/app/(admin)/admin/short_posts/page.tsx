@@ -10,11 +10,11 @@ export default async function ShortPostsPage() {
   ]);
 
   return (
-    <div className="bg-white-500 h-full">
+    <div className="bg-white-500 min-h-screen">
       <h1 className="text-2xl font-bold text-center py-4">관리자 페이지</h1>
       <CreateShortArticleForm tags={tags} />
 
-      <div className="m-3">
+      <div className="p-3">
         <h2 className="text-xl font-bold  py-4">작성된 글 목록</h2>
         {shortPosts && shortPosts.length > 0 ? (
           <ul>

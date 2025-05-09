@@ -107,7 +107,7 @@ export default function CreateShortArticleForm({
           {tags.map((tag) => (
             <div key={tag.id} className="flex items-center">
               <input
-                type="checkbox"
+                type="radio"
                 id={`tag-${tag.id}`}
                 name="tag_ids"
                 value={tag.id.toString()}

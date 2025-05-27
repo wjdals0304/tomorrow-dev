@@ -2,12 +2,12 @@
 
 import { ShortArticle } from '@/app/(admin)/admin/lib/shortArticles';
 import { useEditShortPosts } from '../hooks/useEditShortPosts';
-import useEditShortPostsForm, { ShortPostForm } from '@/app/(admin)/admin/hooks/useEditShortPostsForm';
-import { FormProvider } from 'react-hook-form';
+import { ShortPostForm } from '@/app/(admin)/admin/hooks/useEditShortPostsForm';
 import Title from './Fields/Title';
 import Content from './Fields/Content';
 import Tag from './Fields/Tag';
 import useHandleSubmit from '@/app/(admin)/admin/hooks/useHandleSubmit';
+import { useFormContext } from 'react-hook-form';
 
 interface EditShortPostFormProps {
   shortPost: ShortArticle & { short_post_tags?: { tags: { id: number } }[] };
@@ -18,19 +18,11 @@ export default function EditShortPostForm({
   shortPost: initialShortPost,
   tags,
 }: EditShortPostFormProps) {
-
-  const defaultValues: ShortPostForm = {
-    title: initialShortPost.title,
-    content: initialShortPost.content,
-    tag: tags[0].id,
-  };
-
-  const methods = useEditShortPostsForm(defaultValues);
-  const { onSubmit } = useHandleSubmit();
   const {
     handleSubmit,
-    formState: { isSubmitting, errors },
-  } = methods;
+    formState: { isSubmitting, errors }
+  } = useFormContext<ShortPostForm>();
+  const { onSubmit } = useHandleSubmit();
   const error = errors.root?.message;
 
   const { isLoading } = useEditShortPosts({ initialShortPost });
@@ -39,11 +31,10 @@ export default function EditShortPostForm({
   if (isLoading) return <div>로딩 중...</div>;
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        <Title />
-        <Content />
-        <Tag tags={tags} />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <Title />
+      <Content />
+      <Tag tags={tags} />
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <button
         type="submit"
@@ -53,6 +44,5 @@ export default function EditShortPostForm({
         {isPending ? '수정 중...' : '수정하기'}
       </button>
     </form>
-    </FormProvider>
   );
 }

@@ -1,6 +1,8 @@
 import { getAdminShortPostById } from '@/app/(admin)/admin/lib/shortArticles';
 import { getTagsList } from '@/app/(admin)/admin/lib/tags';
 import EditShortPostForm from '../../../components/EditShortPostForm';
+import EditFormProvider from '@/app/(admin)/admin/components/EditFormProvider';
+import { ShortPostForm } from '@/app/(admin)/admin/hooks/useEditShortPostsForm';
 
 type ShortPostEditPageProps = {
   params: {
@@ -16,7 +18,11 @@ export default async function ShortPostEditPage({
     return <div>짧은 글을 찾을 수 없습니다.</div>;
   }
   const tags = await getTagsList();
-
+  const defaultValues: ShortPostForm = {
+    title: shortPost.title,
+    content: shortPost.content,
+    tag: tags[0].id,
+  };
   return (
     <div className="bg-white-500 min-h-screen p-4">
       <h1 className="text-2xl font-bold mb-4">{shortPost.title} - 수정</h1>
@@ -27,7 +33,9 @@ export default async function ShortPostEditPage({
           작성일: {new Date(shortPost.created_at).toLocaleDateString()}
         </p>
       </div>
-      <EditShortPostForm shortPost={shortPost} tags={tags} />
+      <EditFormProvider defaultValues={defaultValues}>
+        <EditShortPostForm shortPost={shortPost} tags={tags} />
+      </EditFormProvider>
     </div>
   );
 }

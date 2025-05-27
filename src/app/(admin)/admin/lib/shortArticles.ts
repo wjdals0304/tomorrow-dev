@@ -1,8 +1,9 @@
 'use server';
 
 import { supabase } from '@/shared/lib/supabase';
-import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
+import { ShortPostForm } from '@/app/(admin)/admin/hooks/useEditShortPostsForm';
 
 export interface ShortArticle {
   id: number;
@@ -62,14 +63,20 @@ const UpdateShortPostSchema = z.object({
   tagIds: z.number().int().positive().optional(),
 });
 
-export async function updateShortPostAction(formData: FormData) {
+export async function updateShortPostAction(
+  editId: number,
+  formData: ShortPostForm,
+) {
   let validatedData;
+
   try {
+    const { title, content, tag } = formData;
+
     validatedData = UpdateShortPostSchema.parse({
-      id: parseInt(formData.get('shortPostId') as string, 10),
-      title: formData.get('title'),
-      content: formData.get('content'),
-      tagIds: parseInt(formData.get('tags') as string, 10),
+      id: editId,
+      title,
+      content,
+      tagIds: tag,
     });
   } catch (error) {
     console.error('Error parsing form data:', error);

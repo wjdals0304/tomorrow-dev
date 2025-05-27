@@ -23,7 +23,7 @@ export default function EditShortPostForm({
     error,
     isPending,
     isLoading,
-  } = useEditShortPosts({ initialShortPost });
+  } = useEditShortPosts({ initialShortPost, tags });
 
   if (isLoading) return <div>로딩 중...</div>;
 

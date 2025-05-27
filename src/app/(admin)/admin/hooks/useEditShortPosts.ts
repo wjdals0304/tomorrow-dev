@@ -1,7 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { ShortArticle, updateShortPostAction } from '../lib/shortArticles';
+import useEditShortPostsForm, {
+  ShortPostForm,
+} from '@/app/(admin)/admin/hooks/useEditShortPostsForm';
+import { Tag } from '@/app/(admin)/admin/lib/tags';
 
 interface ShortPostFormValues {
   title: string;
@@ -12,14 +16,22 @@ interface UseEditShortPostsProps {
   initialShortPost: ShortArticle & {
     short_post_tags?: { tags: { id: number } }[];
   };
+  tags: Tag[];
 }
 
 export function useEditShortPosts({
   initialShortPost,
+  tags,
 }: UseEditShortPostsProps) {
   const queryClient = useQueryClient();
   const [selectedTags, setSelectedTags] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const defaultValues: ShortPostForm = {
+    title: initialShortPost.title,
+    content: initialShortPost.content,
+    tag: tags[0].id,
+  };
 
   const {
     register,
@@ -27,12 +39,7 @@ export function useEditShortPosts({
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<ShortPostFormValues>({
-    defaultValues: {
-      title: initialShortPost.title,
-      content: initialShortPost.content,
-    },
-  });
+  } = useEditShortPostsForm(defaultValues);
 
   const { data: shortPost, isLoading } = useQuery({
     queryKey: ['shortPost', initialShortPost.id],
